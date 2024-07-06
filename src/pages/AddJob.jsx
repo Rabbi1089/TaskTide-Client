@@ -15,12 +15,12 @@ const AddJob = () => {
         const form = e.target;
         const job_title = form.job_title.value;
         const email = form.email.value;
-        const date = startDate;
+        const deadline = startDate;
         const category = form.category.value;
-        const min_price = form.min_price.value;
-        const max_price = form.max_price.value;
+        const min_price = parseFloat(form.min_price.value)
+        const max_price = parseFloat(form.max_price.value) 
         const description = form.description.value;
-        const jobPost = {job_title , date, category, min_price, max_price, description,
+        const jobPost = {job_title , deadline, category, min_price, max_price, description,
             buyer : {
                 email,
                 name : user.displayName,

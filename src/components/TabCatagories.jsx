@@ -36,7 +36,7 @@ useEffect(() => {
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {jobs
-              .filter((j) => j.category === "web development")
+              .filter((j) => j.category === "web development" || j.category === "Web Development" )
               .map((job, id) => (
                 <JobCard key={id} job={job}></JobCard>
               ))}
@@ -45,7 +45,7 @@ useEffect(() => {
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {jobs
-              .filter((j) => j.category === "graphics design")
+              .filter((j) => j.category === "graphics design" || j.category === "Graphics Design")
               .map((job, id) => (
                 <JobCard key={id} job={job}></JobCard>
               ))}
@@ -54,7 +54,7 @@ useEffect(() => {
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {jobs
-              .filter((j) => j.category === "digital marketing")
+              .filter((j) => j.category === "digital marketing" || j.category === "Digital Marketing")
               .map((job, id) => (
                 <JobCard key={id} job={job}></JobCard>
               ))}

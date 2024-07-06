@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { user , logOut } = useContext(AuthContext);
-  console.log(user)
+ // console.log(user)
   return (
     <div className="navbar bg-base-100 shadow-sm container px-4 mx-auto">
       <div className="flex-1">

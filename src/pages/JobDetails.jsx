@@ -48,7 +48,7 @@ const JobDetails = () => {
       category,
     };
 
-    console.log(bidsData)
+    //console.log(bidsData)
 
     try {
       const { data } = await axios.post(

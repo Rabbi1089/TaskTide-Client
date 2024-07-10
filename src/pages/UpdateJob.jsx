@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom"
+import {  useLoaderData, useNavigate } from "react-router-dom"
 import { AuthContext } from "../provider/AuthProvider";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const UpdateJob = () => {
     const job = useLoaderData();
+    const navigate = useNavigate()
     const {
         _id,
         job_title,
@@ -19,6 +22,38 @@ const UpdateJob = () => {
       const {user} = useContext(AuthContext)
       const [startDate, setStartDate] = useState(new Date(deadline) || new Date())
 
+      const handleFormUpdate =async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const job_title = form.job_title.value;
+        const email = form.email.value
+        const deadline = startDate;
+        const category = form.category.value;
+        const min_price = parseFloat(form.min_price.value)
+        const max_price = parseFloat(form.max_price.value) 
+        const description = form.description.value;
+        const UpdatedJobPost = {job_title , deadline, category, min_price, max_price, description ,
+            buyer: {
+                email,
+                name: user?.displayName,
+                photo: user?.photoURL,
+              },
+        }
+        console.log(UpdatedJobPost)
+        try {
+            const { data } = await axios.put(
+              `${import.meta.env.VITE_API_URL}/job/${_id}`,
+              UpdatedJobPost
+            )
+            console.log(data)
+            toast.success('Job Data Updated Successfully!')
+            navigate('/my-posted-jobs')
+          } catch (err) {
+            console.log(err)
+            toast.error(err.message)
+          }
+      }
+
       
   
     return (
@@ -28,7 +63,7 @@ const UpdateJob = () => {
             Update a Job
           </h2>
   
-          <form>
+          <form onSubmit={handleFormUpdate}>
             <div className='grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2'>
               <div>
                 <label className='text-gray-700 ' htmlFor='job_title'>

@@ -9,6 +9,7 @@ import AddJob from '../pages/AddJob';
 import MyPostedJobs from '../pages/MyPostedJobs';
 import UpdateJob from '../pages/UpdateJob';
 import PrivateRoute from './PrivateRoute';
+import MyBids from '../pages/authentication/MyBids';
 
 const router = createBrowserRouter([
     {
@@ -65,6 +66,11 @@ const router = createBrowserRouter([
                 <MyPostedJobs></MyPostedJobs>
                 </PrivateRoute>
                 
+            },
+
+            {
+                path : 'my-bids',
+                element : <MyBids />
             }
         ])
     }

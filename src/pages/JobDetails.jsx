@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -56,6 +56,7 @@ const JobDetails = () => {
         bidsData
       );
       //console.log(data)
+      toast.success("Applied Successful");
     } catch (error) {
       console.error(error);
     }

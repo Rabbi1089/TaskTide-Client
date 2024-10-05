@@ -1,12 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../provider/AuthProvider";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { data } from "autoprefixer";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import useAuths from "../hooks/useAuths";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+
 
 const MyPostedJobs = () => {
-  const { user } = useContext(AuthContext);
+  //const { user } = useContext(AuthContext);
+  const {user} = useAuths()
+  const axiosSecure = useAxiosSecure()
   const [job, setJob] = useState([]);
   console.log(job);
 
@@ -16,9 +19,9 @@ const MyPostedJobs = () => {
 
   //get data 
   const getData = async () => {
-    const { data } = await axios(
-      `${import.meta.env.VITE_API_URL}/jobs/${user?.email}`,
-      {withCredentials : true}
+    const { data } = await axiosSecure(
+      `/jobs/${user?.email}`,
+     
     );
     setJob(data);
   };

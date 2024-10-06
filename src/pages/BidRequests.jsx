@@ -1,33 +1,44 @@
-import { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../provider/AuthProvider"
-import axios from "axios"
+
+import { useQuery, useQueryClient } from "react-query"
+import useAxiosSecure from "../hooks/useAxiosSecure"
+import useAuths from "../hooks/useAuths"
 
 
 const BidRequests = () => {
-  const {user} = useContext(AuthContext)
-  const [bids , setBids ] = useState([])
+  const {user} = useAuths()
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+  //const [bids , setBids ] = useState([])
   //console.log(bids)
 
+  const { data : bids = [] , isLoading } = useQuery ({
+    queryFn : () => getData(),
+    queryKey : ['bids']
+  })
+
+
+  //get data 
+  const getData = async () => {
+    const { data } = await axiosSecure(
+      `/bid-requests/${user?.email}`
+    );
+    return data;
+   
+  };
+
+/*
   useEffect(() => {
     getData();
   }, [user]);
 
-  //get data 
-  const getData = async () => {
-    const { data } = await axios(
-      `${import.meta.env.VITE_API_URL}/bid-requests/${user?.email}`
-    );
-    setBids(data);
-  };
-
-
+*/
 
   const handleStatus =  async( id, prevStatus, status) => {
     if (prevStatus === status) return
       console.log('already processed')
     
     console.log(id ,prevStatus, status)
-    const {data} = await axios.patch (
+    const {data} = await axiosSecure.patch (
        `${import.meta.env.VITE_API_URL}/bid/${id}`,
        {status}
     )

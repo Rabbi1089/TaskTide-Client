@@ -1,7 +1,8 @@
 
-import { useQuery, useQueryClient } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import useAxiosSecure from "../hooks/useAxiosSecure"
 import useAuths from "../hooks/useAuths"
+import toast from "react-hot-toast"
 
 
 const BidRequests = () => {
@@ -11,9 +12,9 @@ const BidRequests = () => {
   //const [bids , setBids ] = useState([])
   //console.log(bids)
 
-  const { data : bids = [] , isLoading } = useQuery ({
+  const { data : bids = [] , isLoading , refetch , isError , error} = useQuery ({
     queryFn : () => getData(),
-    queryKey : ['bids']
+    queryKey : ['bids', user?.email]
   })
 
 
@@ -32,18 +33,39 @@ const BidRequests = () => {
   }, [user]);
 
 */
+const {mutateAsync} = useMutation({
+  mutationFn :async ({id , status}) => {
+    const {data} = await axiosSecure.patch (
+      `${import.meta.env.VITE_API_URL}/bid/${id}`,
+      {status})
+      console.log(data);
+  },
+  onSuccess: () =>{
+    console.log('wow , data updated')
+    //refesh the latest data
+    refetch()
+    toast.success('updated')
+  }
+})
 
+
+
+//handleStatus
   const handleStatus =  async( id, prevStatus, status) => {
     if (prevStatus === status) return
-      console.log('already processed')
-    
-    console.log(id ,prevStatus, status)
+    /*
     const {data} = await axiosSecure.patch (
        `${import.meta.env.VITE_API_URL}/bid/${id}`,
        {status}
     )
-    console.log(data)
-    getData();
+           getData();
+       */
+
+
+    //newly added below line
+   await mutateAsync({
+      id , status
+    })
   }
 
     return (

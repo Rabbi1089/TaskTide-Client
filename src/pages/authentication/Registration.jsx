@@ -10,7 +10,7 @@ const Registration = () => {
   const navigate = useNavigate();
   const location = useLocation();
    const from = location.state || '/'
-  const { createUser, signInWithGoogle, user, setUser, updateUserProfile } =
+  const { createUser, signInWithGoogle, setUser, updateUserProfile } =
     useContext(AuthContext);
 
   // Google Signin

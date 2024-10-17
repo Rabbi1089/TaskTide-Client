@@ -29,7 +29,7 @@ const MyPostedJobs = () => {
   const handleDelete = async (id) => {
     try {
       //console.log(`${import.meta.env.VITE_API_URL}/job/${id}`)
-      const { data } = await axios.delete(
+      const { data } = await axiosSecure.delete(
         `${import.meta.env.VITE_API_URL}/job/${id}`
       );
       console.log(data);

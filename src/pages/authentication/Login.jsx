@@ -6,10 +6,10 @@ import logo from "../../assets/images/logo1.png"
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 const Login = () => {
     const navigate = useNavigate()
-    
+    const axiosSecure = useAxiosSecure()
     const location = useLocation();
     const {signIn,signInWithGoogle , user } = useContext(AuthContext)
     useEffect( () => {
@@ -27,7 +27,7 @@ const Login = () => {
            const result =  await signInWithGoogle();
            console.log(result.user.email)
            //2. get token from server using email
-           const { data } = await axios.post(
+           const { data } = await axiosSecure.post(
             `${import.meta.env.VITE_API_URL}/jwt`,
             {
               email: result?.user?.email,
@@ -55,7 +55,7 @@ const Login = () => {
         try {
             const result =  await signIn(email , password);
             console.log(result);
-            const { data } = await axios.post(
+            const { data } = await axiosSecure.post(
               `${import.meta.env.VITE_API_URL}/jwt`,
               {
                 email: result?.user?.email,

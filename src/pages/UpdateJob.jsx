@@ -3,12 +3,13 @@ import {  useLoaderData, useNavigate } from "react-router-dom"
 import { AuthContext } from "../provider/AuthProvider";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
-import axios from "axios";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const UpdateJob = () => {
     const job = useLoaderData();
     const navigate = useNavigate()
+    const axiosSecure = useAxiosSecure();
     const {
         _id,
         job_title,
@@ -41,7 +42,7 @@ const UpdateJob = () => {
         }
         console.log(UpdatedJobPost)
         try {
-            const { data } = await axios.put(
+            const { data } = await axiosSecure.put(
               `${import.meta.env.VITE_API_URL}/job/${_id}`,
               UpdatedJobPost
             )
